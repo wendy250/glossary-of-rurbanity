@@ -981,7 +981,17 @@ header.bar{
       '</button>';
   }
 
-  searchInput.addEventListener('input', function(){ renderList(searchInput.value); });
+  // Typing (or even just focusing) the search box while a term detail is open
+  // switches the panel back to the list so the results are actually visible --
+  // otherwise the list was being filtered behind the still-showing detail view.
+  function showSearchableList(){
+    if(detailView.style.display !== 'none') closeDetail();
+  }
+  searchInput.addEventListener('focus', showSearchableList);
+  searchInput.addEventListener('input', function(){
+    showSearchableList();
+    renderList(searchInput.value);
+  });
 
   // ---- detail ----
   var activeId = null;
