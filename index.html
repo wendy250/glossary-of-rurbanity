@@ -221,7 +221,6 @@ header.bar{
   width:1000px;
   height:486.72px;
   transform-origin:0 0;
-  will-change:transform;
 }
 .map-world svg{ display:block; width:1000px; height:486.72px; }
 .map-world path.country{
@@ -745,12 +744,20 @@ header.bar{
     apply();
   }
 
+  // Promote to a GPU layer only while an actual gesture is running, and drop
+  // it once things settle, so Chrome/Edge re-rasterize the map at full
+  // resolution when idle instead of leaving a stale low-res cached texture
+  // scaled up (see the .map-world CSS comment above for the full story).
+  var wheelSettleTimer = null;
   viewport.addEventListener('wheel', function(ev){
     ev.preventDefault();
     var rect = viewport.getBoundingClientRect();
     var cx = ev.clientX - rect.left, cy = ev.clientY - rect.top;
     var factor = Math.pow(1.0025, -ev.deltaY);
+    world.style.willChange = 'transform';
     zoomAt(cx, cy, factor);
+    clearTimeout(wheelSettleTimer);
+    wheelSettleTimer = setTimeout(function(){ world.style.willChange = 'auto'; }, 180);
   }, { passive:false });
 
   var dragging = false, dragStartX=0, dragStartY=0, txStart=0, tyStart=0, moved=false;
@@ -758,6 +765,7 @@ header.bar{
     dragging = true; moved=false;
     dragStartX = x; dragStartY = y; txStart = tx; tyStart = ty;
     viewport.classList.add('dragging');
+    world.style.willChange = 'transform';
   }
   function pointerMove(x,y){
     if(!dragging) return;
@@ -769,6 +777,7 @@ header.bar{
   function pointerUp(){
     dragging = false;
     viewport.classList.remove('dragging');
+    world.style.willChange = 'auto';
   }
   viewport.addEventListener('mousedown', function(ev){ pointerDown(ev.clientX, ev.clientY); });
   window.addEventListener('mousemove', function(ev){ pointerMove(ev.clientX, ev.clientY); });
@@ -789,6 +798,7 @@ header.bar{
     pinchActive = true;
     pinchDist0 = dist(ev.touches[0], ev.touches[1]);
     pinchScale0 = scale;
+    world.style.willChange = 'transform';
   }
   function pinchMove(ev){
     if(!pinchActive) return;
