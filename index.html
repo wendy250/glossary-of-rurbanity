@@ -832,23 +832,22 @@ header.bar{
     m.style.left = x + 'px';
     m.style.top = y + 'px';
     m.innerHTML = '<span class="marker-inner"><span class="tag-box">'+escapeHtml(e.original)+'</span><span class="pin-line"></span></span>';
-    m.addEventListener('click', function(){ selectEntry(e.id); });
+    m.dataset.id = e.id;
     markersLayer.appendChild(m);
     markerEls[e.id] = m;
   });
 
-  // ---- precise hover targeting for overlapping markers ----
+  // ---- precise targeting for overlapping markers (shared by hover + click) ----
   // When many labels crowd together, the browser's default hit-test only
   // ever reaches whichever box happens to be topmost in paint order, even
   // if the cursor is really closest to a different (partly hidden) label's
   // anchor point. elementsFromPoint returns every marker whose box covers
-  // the cursor (not just the visible one), so we can pick the one whose
-  // pin actually sits nearest the cursor and raise just that one to front.
-  var proximityTopEl = null;
-  function clearProximityTop(){
-    if(proximityTopEl){ proximityTopEl.classList.remove('proximity-top'); proximityTopEl = null; }
-  }
-  function updateProximityTop(clientX, clientY){
+  // the cursor (not just the visible one), so we resolve the one whose pin
+  // actually sits nearest the cursor and use that SAME resolution for both
+  // the hover preview and the click, so what you see highlighted is always
+  // exactly what you'll open.
+  var MAX_DIST_SQ = 160*160; // ignore candidates whose anchor is too far to be a plausible target
+  function resolveMarkerAt(clientX, clientY){
     var stack = document.elementsFromPoint(clientX, clientY);
     var candidates = [];
     for(var i=0;i<stack.length;i++){
@@ -856,7 +855,6 @@ header.bar{
       if(el && candidates.indexOf(el) === -1) candidates.push(el);
     }
     var best = null, bestDist = Infinity;
-    var MAX_DIST_SQ = 160*160; // ignore candidates whose anchor is too far to be a plausible target
     candidates.forEach(function(el){
       var r = el.getBoundingClientRect();
       var ax = r.left + r.width/2, ay = r.bottom;
@@ -864,6 +862,14 @@ header.bar{
       var d = dx*dx + dy*dy;
       if(d < bestDist && d <= MAX_DIST_SQ){ bestDist = d; best = el; }
     });
+    return best;
+  }
+  var proximityTopEl = null;
+  function clearProximityTop(){
+    if(proximityTopEl){ proximityTopEl.classList.remove('proximity-top'); proximityTopEl = null; }
+  }
+  function updateProximityTop(clientX, clientY){
+    var best = resolveMarkerAt(clientX, clientY);
     if(best !== proximityTopEl){
       clearProximityTop();
       if(best){ best.classList.add('proximity-top'); proximityTopEl = best; }
@@ -874,6 +880,18 @@ header.bar{
   });
   markersLayer.addEventListener('pointerleave', clearProximityTop);
   viewport.addEventListener('pointerleave', clearProximityTop);
+
+  // Click routing uses the exact same nearest-anchor resolution as hover
+  // (falling back to whatever the browser's native hit-test found, e.g. for
+  // touch taps that never fired a pointermove), so the term that opens is
+  // always the one that was actually shown highlighted.
+  markersLayer.addEventListener('click', function(ev){
+    var resolved = resolveMarkerAt(ev.clientX, ev.clientY) ||
+      (ev.target.closest ? ev.target.closest('.marker') : null);
+    if(resolved && resolved.dataset.id !== undefined){
+      selectEntry(parseInt(resolved.dataset.id, 10));
+    }
+  });
 
   function escapeHtml(s){
     if(s==null) return '';
