@@ -285,18 +285,28 @@ header.bar{
 .marker.active{
   z-index:998;
 }
+/* Hover / proximity-precision: brings the label to front and shows its
+   full text, but stays visually "preview" (light fill) so it's never
+   mistaken for an actually-selected (.active) term. */
 .marker:hover .tag-box, .marker:focus-visible .tag-box, .marker.proximity-top .tag-box{
-  background:var(--accent);
-  color:#fff9ee;
+  background:var(--surface);
+  border-color:var(--accent-ink);
+  color:var(--accent-ink);
   transform:translateY(-1px);
   box-shadow:0 4px 10px -3px rgba(0,0,0,0.45);
   max-width:none;
   overflow:visible;
 }
+/* Active (actually selected / open in the detail panel): the only state
+   that gets the solid filled look. */
 .marker.active .tag-box{
   background:var(--accent);
   color:#fff9ee;
   box-shadow:0 0 0 3px color-mix(in srgb, var(--accent) 35%, transparent);
+}
+.marker.active:hover .tag-box, .marker.active.proximity-top .tag-box{
+  background:var(--accent);
+  color:#fff9ee;
 }
 .marker:focus-visible{ outline:none; }
 .marker:focus-visible .tag-box{ box-shadow:0 0 0 3px var(--focus); }
@@ -846,12 +856,13 @@ header.bar{
       if(el && candidates.indexOf(el) === -1) candidates.push(el);
     }
     var best = null, bestDist = Infinity;
+    var MAX_DIST_SQ = 160*160; // ignore candidates whose anchor is too far to be a plausible target
     candidates.forEach(function(el){
       var r = el.getBoundingClientRect();
       var ax = r.left + r.width/2, ay = r.bottom;
       var dx = clientX - ax, dy = clientY - ay;
       var d = dx*dx + dy*dy;
-      if(d < bestDist){ bestDist = d; best = el; }
+      if(d < bestDist && d <= MAX_DIST_SQ){ bestDist = d; best = el; }
     });
     if(best !== proximityTopEl){
       clearProximityTop();
@@ -959,17 +970,9 @@ header.bar{
     html += block('Condition', e.condition_raw);
     // Design response
     html += block('Design response', e.design_response_raw);
-    // Picture + caption (caption text verbatim; original image files are not
-    // embedded in this page)
-    if(e.figures_raw && e.figures_raw.length){
-      e.figures_raw.forEach(function(cap){
-        html += '<div class="detail-figure"><div class="k">Picture + caption</div><div class="v">'+escapeHtml(cap)+'</div></div>';
-      });
-    }
     // Reference
     html += block('Reference', e.references_raw, 'refs');
 
-    if(e.note) html += block('Note', e.note);
     html += '<div class="detail-contributor"><div class="k">Contributed by</div><div class="name">'+escapeHtml(e.contributor||'—')+'</div></div>';
     if(!e.unlocated) html += '<button type="button" class="detail-locate" id="detailLocate">◎ Locate on map</button>';
     if(!e.source_path){
