@@ -1,0 +1,334 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Glossary of Rurbanity</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Work+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans:wght@400;500;600&family=Noto+Sans+Arabic:wght@400;600&family=Noto+Sans+SC:wght@400;600&family=Noto+Sans+Bengali:wght@400;600&family=Noto+Sans+Gurmukhi:wght@400;600&family=Noto+Sans+Devanagari:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+/* Same palette as the atlas (index.html) so the two read as one site. */
+:root{
+  --ground:#f5edf7;
+  --surface:#faf5fb;
+  --surface-2:#f1e6f4;
+  --surface-border:#e6cfe9;
+  --ink:#3a2044;
+  --ink-soft:#7c5a86;
+  --ink-faint:#ab8bb2;
+  --accent:#b34fc9;
+  --accent-ink:#7a2f8a;
+  --accent-2:#8a5cb8;
+  --accent-2-soft:#a37cc9;
+  --surface-glass:rgba(250,245,251,0.90);
+  --term-font:'Noto Sans','Noto Sans Arabic','Noto Sans SC','Noto Sans Bengali','Noto Sans Gurmukhi','Noto Sans Devanagari','Work Sans',sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#1d1424;
+    --surface:#241a2e;
+    --surface-2:#2e2138;
+    --surface-border:#4a3455;
+    --ink:#f5e6f7;
+    --ink-soft:#c6a6cf;
+    --ink-faint:#8a6d92;
+    --accent:#e0a0ee;
+    --accent-ink:#f6dcf9;
+    --accent-2:#b48fd6;
+    --accent-2-soft:#9c7fc2;
+    --surface-glass:rgba(36,26,46,0.90);
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#1d1424;
+  --surface:#241a2e;
+  --surface-2:#2e2138;
+  --surface-border:#4a3455;
+  --ink:#f5e6f7;
+  --ink-soft:#c6a6cf;
+  --ink-faint:#8a6d92;
+  --accent:#e0a0ee;
+  --accent-ink:#f6dcf9;
+  --accent-2:#b48fd6;
+  --accent-2-soft:#9c7fc2;
+  --surface-glass:rgba(36,26,46,0.90);
+}
+
+*{ box-sizing:border-box; }
+body{
+  margin:0;
+  background:var(--ground);
+  color:var(--ink);
+  font-family:'Work Sans','Noto Sans',sans-serif;
+}
+a{ color:var(--accent-2); }
+
+/* ---------- header (matches the atlas bar) ---------- */
+header.bar{
+  position:sticky;
+  top:0;
+  display:flex;
+  align-items:center;
+  gap:20px;
+  padding:12px 20px;
+  background:var(--surface-glass);
+  -webkit-backdrop-filter:blur(10px);
+  backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--surface-border);
+  z-index:20;
+}
+.wordmark{ display:flex; align-items:baseline; gap:9px; text-decoration:none; color:var(--ink); min-width:0; }
+.wordmark .glyph{ font-family:'Fraunces',serif; font-weight:700; font-size:22px; white-space:nowrap; }
+.wordmark .tag{
+  font-family:'IBM Plex Mono',monospace; font-size:10.5px; text-transform:uppercase;
+  letter-spacing:0.09em; color:var(--ink-faint); white-space:nowrap;
+}
+.back-link{
+  margin-left:auto;
+  flex-shrink:0;
+  font-family:'IBM Plex Mono',monospace;
+  font-size:11px;
+  letter-spacing:0.05em;
+  color:var(--accent-2);
+  text-decoration:none;
+  border:1px solid var(--accent-2-soft);
+  padding:7px 11px;
+  border-radius:3px;
+}
+.back-link:hover{ background:color-mix(in srgb, var(--accent-2) 12%, transparent); }
+@media(max-width:560px){
+  .wordmark .glyph{ font-size:17px; }
+  .wordmark .tag{ display:none; }
+}
+
+/* ---------- article ---------- */
+main{ padding:48px 16px 80px; }
+.term{ max-width:760px; margin:0 auto; }
+.eyebrow{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:11px;
+  letter-spacing:0.09em;
+  text-transform:uppercase;
+  color:var(--ink-faint);
+}
+.eyebrow .dot{ margin:0 6px; }
+h1.orig{
+  margin:10px 0 0;
+  font-family:var(--term-font);
+  font-weight:600;
+  font-size:clamp(34px, 6vw, 56px);
+  line-height:1.15;
+  word-break:break-word;
+  text-wrap:balance;
+}
+.translit{
+  margin:6px 0 0;
+  font-family:'Fraunces',serif;
+  font-style:italic;
+  font-size:20px;
+  color:var(--ink-soft);
+}
+
+.facts{
+  margin:32px 0 0;
+  display:grid;
+  grid-template-columns:repeat(3, minmax(0,1fr));
+  gap:0;
+  border-top:1px solid var(--surface-border);
+  border-bottom:1px solid var(--surface-border);
+}
+.facts > div{ padding:16px 16px 18px 0; }
+.facts > div + div{ padding-left:16px; border-left:1px solid var(--surface-border); }
+@media(max-width:640px){
+  .facts{ grid-template-columns:1fr; }
+  .facts > div + div{ padding-left:0; border-left:none; border-top:1px solid var(--surface-border); }
+}
+.k{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:10.5px;
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+  color:var(--ink-faint);
+  margin-bottom:6px;
+}
+.facts .v{ font-size:14.5px; line-height:1.5; white-space:pre-wrap; }
+
+.keyword{ margin:28px 0 0; }
+.keyword .v{ font-family:'Fraunces',serif; font-size:18px; line-height:1.5; white-space:pre-wrap; }
+
+/* figures stay within the text column */
+.figures{ margin:40px 0 0; }
+figure{ margin:0 0 32px; }
+.fig-images.multi{
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(240px, 1fr));
+  gap:10px;
+  align-items:start;
+}
+figure img{
+  display:block;
+  width:100%;
+  height:auto;
+  border-radius:3px;
+  border:1px solid var(--surface-border);
+  background:var(--surface-2);
+}
+figcaption{
+  margin-top:10px;
+  font-size:13px;
+  line-height:1.55;
+  color:var(--ink-soft);
+  max-width:760px;
+}
+figcaption .cap{ white-space:pre-line; }
+figcaption .num{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:10.5px;
+  letter-spacing:0.06em;
+  text-transform:uppercase;
+  color:var(--ink-faint);
+  margin-right:6px;
+}
+
+section.text{ margin:40px 0 0; }
+section.text h2{
+  margin:0 0 12px;
+  font-family:'Fraunces',serif;
+  font-weight:600;
+  font-size:22px;
+}
+section.text p{
+  margin:0 0 1em;
+  font-size:16.5px;
+  line-height:1.72;
+}
+section.refs p{
+  font-size:13.5px;
+  line-height:1.6;
+  color:var(--ink-soft);
+  padding-left:1.4em;
+  text-indent:-1.4em;
+  overflow-wrap:anywhere;
+  margin:0 0 .6em;
+}
+
+.contributor{
+  margin:48px 0 0;
+  padding-top:20px;
+  border-top:1px dashed var(--surface-border);
+}
+.contributor .name{ font-family:'Fraunces',serif; font-weight:500; font-size:19px; }
+.contributor .affil{ margin-top:2px; font-size:13.5px; color:var(--ink-soft); }
+
+.map-link{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  margin-top:28px;
+  font-family:'IBM Plex Mono',monospace;
+  font-size:11px;
+  letter-spacing:0.05em;
+  color:var(--accent-2);
+  text-decoration:none;
+  border:1px solid var(--accent-2-soft);
+  padding:8px 12px;
+  border-radius:3px;
+}
+.map-link:hover{ background:color-mix(in srgb, var(--accent-2) 12%, transparent); }
+
+.missing{ text-align:center; padding:80px 16px; color:var(--ink-soft); }
+</style>
+</head>
+<body>
+<header class="bar">
+  <a class="wordmark" href="index.html">
+    <span class="glyph">Glossary of Rurbanity</span>
+    <span class="tag">A Field Atlas</span>
+  </a>
+  <a class="back-link" id="backLink" href="index.html">← Back to map</a>
+</header>
+
+<main><article class="term" id="term"></article></main>
+
+<script src="entries.js"></script>
+<script>
+(function(){
+  var ENTRIES = window.GLOSSARY_ENTRIES || [];
+  var root = document.getElementById('term');
+  var id = parseInt(new URLSearchParams(location.search).get('id'), 10);
+  var e = ENTRIES[id];
+
+  function esc(s){
+    if(s==null) return '';
+    return String(s).replace(/[&<>"']/g, function(c){
+      return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];
+    });
+  }
+  // Source text keeps paragraph breaks as newlines; blank lines are dropped.
+  function paras(text){
+    return String(text).split(/\n+/).map(function(t){ return t.trim(); })
+      .filter(Boolean).map(function(t){ return '<p>'+esc(t)+'</p>'; }).join('');
+  }
+  function fact(label, text){
+    if(!text) return '';
+    return '<div><div class="k">'+esc(label)+'</div><div class="v">'+esc(text)+'</div></div>';
+  }
+  function section(title, text, cls){
+    if(!text) return '';
+    return '<section class="text'+(cls?' '+cls:'')+'"><h2>'+esc(title)+'</h2>'+paras(text)+'</section>';
+  }
+
+  if(!e){
+    root.innerHTML = '<div class="missing">This term could not be found. <a href="index.html">Return to the map</a>.</div>';
+    return;
+  }
+
+  document.title = e.original + ' · Glossary of Rurbanity';
+  var mapHref = 'index.html#term=' + e.id;
+  document.getElementById('backLink').href = mapHref;
+
+  var html = '';
+  var eyebrow = [e.unlocated ? 'Non-geographic term' : e.country, e.contributor].filter(Boolean).map(esc);
+  html += '<div class="eyebrow">'+eyebrow.join('<span class="dot">·</span>')+'</div>';
+  html += '<h1 class="orig">'+esc(e.original)+'</h1>';
+  if(e.transliteration) html += '<div class="translit">'+esc(e.transliteration)+'</div>';
+
+  html += '<div class="facts">' +
+    fact('Literally', e.literally_raw || e.meaning) +
+    fact('Where', e.where_raw || e.where) +
+    fact('Scale', e.scale_raw || e.scale) +
+  '</div>';
+
+  var kw = e.keyword_raw || e.original;
+  if(kw) html += '<div class="keyword"><div class="k">Keyword</div><div class="v">'+esc(kw)+'</div></div>';
+
+  // Figures are numbered by the page (Fig. 1, Fig. 2, ...); images that belong
+  // to one figure (e.g. a before/after pair) share its number and caption.
+  if(e.figures && e.figures.length){
+    html += '<div class="figures">';
+    e.figures.forEach(function(fig, i){
+      var multi = fig.images.length > 1;
+      html += '<figure><div class="fig-images'+(multi?' multi':'')+'">';
+      fig.images.forEach(function(src){
+        html += '<a href="'+esc(src)+'" target="_blank" rel="noopener"><img src="'+esc(src)+'" alt="'+esc(fig.caption || ('Figure '+(i+1)+' for '+e.original))+'" loading="lazy"></a>';
+      });
+      html += '</div><figcaption><span class="num">Fig. '+(i+1)+'</span>'+(fig.caption ? '<span class="cap">'+esc(fig.caption)+'</span>' : '')+'</figcaption></figure>';
+    });
+    html += '</div>';
+  }
+
+  html += section('Condition', e.condition_raw);
+  html += section('Design response', e.design_response_raw);
+  html += section('References', e.references_raw, 'refs');
+
+  html += '<div class="contributor"><div class="k">Contributed by</div><div class="name">'+esc(e.contributor || '—')+'</div>' +
+    (e.affiliation ? '<div class="affil">'+esc(e.affiliation)+'</div>' : '') + '</div>';
+  if(!e.unlocated) html += '<a class="map-link" href="'+mapHref+'">◎ View on map</a>';
+
+  root.innerHTML = html;
+})();
+</script>
+</body>
+</html>
