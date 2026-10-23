@@ -1,0 +1,390 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Submit a Term · Glossary of Rurbanity</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Work+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans:wght@400;500;600&family=Noto+Sans+Arabic:wght@400;600&family=Noto+Sans+SC:wght@400;600&family=Noto+Sans+Bengali:wght@400;600&family=Noto+Sans+Gurmukhi:wght@400;600&family=Noto+Sans+Devanagari:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+/* Same palette as the atlas (index.html) so every page reads as one site. */
+:root{
+  --ground:#f5edf7;
+  --surface:#faf5fb;
+  --surface-2:#f1e6f4;
+  --surface-border:#e6cfe9;
+  --ink:#3a2044;
+  --ink-soft:#7c5a86;
+  --ink-faint:#ab8bb2;
+  --accent:#b34fc9;
+  --accent-ink:#7a2f8a;
+  --accent-2:#8a5cb8;
+  --accent-2-soft:#a37cc9;
+  --surface-glass:rgba(250,245,251,0.90);
+  --good:#3f8a5c;
+  --good-bg:rgba(63,138,92,0.12);
+  --term-font:'Noto Sans','Noto Sans Arabic','Noto Sans SC','Noto Sans Bengali','Noto Sans Gurmukhi','Noto Sans Devanagari','Work Sans',sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#1d1424;
+    --surface:#241a2e;
+    --surface-2:#2e2138;
+    --surface-border:#4a3455;
+    --ink:#f5e6f7;
+    --ink-soft:#c6a6cf;
+    --ink-faint:#8a6d92;
+    --accent:#e0a0ee;
+    --accent-ink:#f6dcf9;
+    --accent-2:#b48fd6;
+    --accent-2-soft:#9c7fc2;
+    --surface-glass:rgba(36,26,46,0.90);
+    --good:#7fcf9c;
+    --good-bg:rgba(127,207,156,0.14);
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#1d1424;
+  --surface:#241a2e;
+  --surface-2:#2e2138;
+  --surface-border:#4a3455;
+  --ink:#f5e6f7;
+  --ink-soft:#c6a6cf;
+  --ink-faint:#8a6d92;
+  --accent:#e0a0ee;
+  --accent-ink:#f6dcf9;
+  --accent-2:#b48fd6;
+  --accent-2-soft:#9c7fc2;
+  --surface-glass:rgba(36,26,46,0.90);
+  --good:#7fcf9c;
+  --good-bg:rgba(127,207,156,0.14);
+}
+
+*{ box-sizing:border-box; }
+body{
+  margin:0;
+  background:var(--ground);
+  color:var(--ink);
+  font-family:'Work Sans','Noto Sans',sans-serif;
+}
+a{ color:var(--accent-2); }
+
+/* ---------- header (matches the rest of the site) ---------- */
+header.bar{
+  position:sticky;
+  top:0;
+  display:flex;
+  align-items:center;
+  gap:20px;
+  padding:12px 20px;
+  background:var(--surface-glass);
+  -webkit-backdrop-filter:blur(10px);
+  backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--surface-border);
+  z-index:20;
+}
+.wordmark{ display:flex; align-items:baseline; gap:9px; text-decoration:none; color:var(--ink); min-width:0; }
+.wordmark .glyph{ font-family:'Fraunces',serif; font-weight:700; font-size:22px; white-space:nowrap; }
+@media(max-width:560px){ .wordmark .glyph{ font-size:17px; } }
+
+/* ---------- site navigation ---------- */
+.site-nav{ display:flex; align-items:center; gap:2px; flex-shrink:0; }
+.site-nav a{
+  font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:0.06em; text-transform:uppercase;
+  color:var(--ink-soft); text-decoration:none; padding:6px 9px; border-radius:3px; border:1px solid transparent; white-space:nowrap;
+}
+.site-nav a:hover{ color:var(--ink); background:color-mix(in srgb, var(--accent-2) 10%, transparent); }
+.site-nav a[aria-current="page"]{ color:var(--accent-ink); background:var(--surface); border-color:var(--surface-border); }
+@media(max-width:700px){ .site-nav{ display:none; } }
+
+/* ---------- page ---------- */
+main{ padding:48px 16px 100px; }
+.wrap{ max-width:720px; margin:0 auto; }
+.eyebrow{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:11px;
+  letter-spacing:0.09em;
+  text-transform:uppercase;
+  color:var(--ink-faint);
+}
+h1{ margin:10px 0 0; font-family:'Fraunces',serif; font-weight:600; font-size:clamp(30px,5.5vw,46px); line-height:1.15; }
+.lede{ margin:16px 0 0; font-size:16.5px; line-height:1.65; color:var(--ink-soft); max-width:62ch; }
+
+.notice{
+  margin:28px 0 0;
+  padding:12px 14px;
+  border:1px solid var(--surface-border);
+  border-radius:4px;
+  background:var(--surface);
+  font-size:13px;
+  line-height:1.6;
+  color:var(--ink-soft);
+}
+.notice b{ color:var(--ink); }
+
+form{ margin:40px 0 0; }
+fieldset{
+  border:none;
+  margin:0 0 40px;
+  padding:0;
+}
+fieldset + fieldset{ padding-top:36px; border-top:1px solid var(--surface-border); }
+legend{
+  padding:0 0 4px;
+  font-family:'Fraunces',serif;
+  font-weight:600;
+  font-size:19px;
+  width:100%;
+}
+.section-note{ margin:0 0 20px; font-size:13.5px; color:var(--ink-soft); line-height:1.55; }
+
+.field{ margin:0 0 20px; }
+.field label{
+  display:block;
+  margin:0 0 6px;
+  font-family:'IBM Plex Mono',monospace;
+  font-size:10.5px;
+  letter-spacing:0.07em;
+  text-transform:uppercase;
+  color:var(--ink-faint);
+}
+.field .hint{
+  display:block;
+  margin:4px 0 0;
+  font-size:12px;
+  color:var(--ink-faint);
+  font-family:'Work Sans',sans-serif;
+  letter-spacing:0;
+  text-transform:none;
+}
+.field input[type="text"],
+.field input[type="email"],
+.field textarea,
+.field select{
+  width:100%;
+  font-family:'Work Sans',sans-serif;
+  font-size:14.5px;
+  line-height:1.5;
+  padding:10px 12px;
+  border-radius:4px;
+  border:1px solid var(--surface-border);
+  background:var(--surface);
+  color:var(--ink);
+  outline:none;
+}
+.field input::placeholder, .field textarea::placeholder{ color:var(--ink-faint); }
+.field input:focus, .field textarea:focus, .field select:focus{
+  border-color:var(--accent-2);
+  box-shadow:0 0 0 2px color-mix(in srgb, var(--accent-2) 22%, transparent);
+}
+.field textarea{ resize:vertical; min-height:92px; }
+.field textarea.tall{ min-height:150px; }
+.row2{ display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+@media(max-width:560px){ .row2{ grid-template-columns:1fr; } }
+
+.file-drop{
+  display:flex; align-items:center; gap:10px;
+  padding:14px;
+  border:1.5px dashed var(--surface-border);
+  border-radius:4px;
+  background:var(--surface);
+  cursor:pointer;
+}
+.file-drop:hover{ border-color:var(--accent-2-soft); }
+.file-drop input{ display:none; }
+.file-drop .icon{
+  flex-shrink:0; width:30px; height:30px; border-radius:50%;
+  background:var(--surface-2); color:var(--ink-soft);
+  display:flex; align-items:center; justify-content:center; font-size:15px;
+}
+.file-drop .txt{ font-size:13.5px; color:var(--ink-soft); }
+.file-drop .txt b{ color:var(--ink); }
+.file-list{ margin:10px 0 0; font-size:12.5px; color:var(--ink-soft); }
+.file-list li{ margin:2px 0; }
+
+.required-mark{ color:var(--accent-ink); }
+
+.submit-row{
+  margin-top:8px;
+  display:flex; align-items:center; gap:16px; flex-wrap:wrap;
+}
+.submit-btn{
+  display:inline-flex; align-items:center; gap:8px;
+  font-family:'IBM Plex Mono',monospace; font-size:12.5px; letter-spacing:0.05em; text-transform:uppercase;
+  color:#fff; background:var(--accent-2);
+  border:1px solid var(--accent-2);
+  padding:12px 20px; border-radius:4px;
+  cursor:pointer;
+}
+.submit-btn:hover{ background:var(--accent-ink); border-color:var(--accent-ink); }
+:root[data-theme="dark"] .submit-btn{ color:#1d1424; }
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .submit-btn{ color:#1d1424; } }
+.submit-fineprint{ font-size:12px; color:var(--ink-faint); }
+
+.confirm{
+  display:none;
+  margin-top:20px;
+  padding:16px 18px;
+  border:1px solid color-mix(in srgb, var(--good) 45%, var(--surface-border));
+  background:var(--good-bg);
+  border-radius:5px;
+  font-size:14px;
+  line-height:1.6;
+  color:var(--ink);
+}
+.confirm.show{ display:block; }
+.confirm .k{
+  font-family:'IBM Plex Mono',monospace; font-size:10.5px; letter-spacing:0.07em; text-transform:uppercase;
+  color:var(--good); display:block; margin-bottom:6px;
+}
+</style>
+</head>
+<body>
+<header class="bar">
+  <a class="wordmark" href="index.html">
+    <span class="glyph">Glossary of Rurbanity</span>
+  </a>
+  <nav class="site-nav" aria-label="Site"><a href="index.html">Atlas</a><a href="gallery.html">Gallery</a><a href="constellations.html">Constellations</a><a href="submission.html" aria-current="page">Submission</a><a href="about.html">About</a></nav>
+</header>
+
+<main>
+  <div class="wrap">
+    <div class="eyebrow">Contribute a term</div>
+    <h1>Submit a word for the atlas</h1>
+    <p class="lede">Use this sheet to propose a new entry for the Glossary of Rurbanity. Fill in whichever fields you have — if a section doesn't apply to your term, you can leave it blank.</p>
+
+    <div class="notice">
+      <b>This form isn't connected to anything yet.</b> Submitting it below doesn't send your entry anywhere — we haven't set up where submissions should go. For now, please also keep a copy of what you write (e.g. in a doc) so nothing is lost once the real submission path is ready.
+    </div>
+
+    <form id="submissionForm">
+      <fieldset>
+        <legend>The term</legend>
+        <div class="row2">
+          <div class="field">
+            <label for="f-original">Keyword, in original language <span class="required-mark">*</span></label>
+            <input type="text" id="f-original" placeholder="e.g. Kulturlandschaft" required>
+          </div>
+          <div class="field">
+            <label for="f-translit">Transliteration / romanization</label>
+            <input type="text" id="f-translit" placeholder="e.g. Kulturlandschaft (if not in Latin script)">
+          </div>
+        </div>
+        <div class="field">
+          <label for="f-literally">Literally</label>
+          <input type="text" id="f-literally" placeholder="A short, literal translation or gloss of the term">
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Where &amp; scale</legend>
+        <div class="row2">
+          <div class="field">
+            <label for="f-where">Where</label>
+            <input type="text" id="f-where" placeholder="Region, city, or landscape this term describes">
+          </div>
+          <div class="field">
+            <label for="f-country">Country</label>
+            <input type="text" id="f-country" placeholder="e.g. Switzerland">
+          </div>
+        </div>
+        <div class="field">
+          <label for="f-scale">Scale</label>
+          <input type="text" id="f-scale" placeholder="e.g. Plot / Territory / Policy-governance">
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Condition &amp; design response</legend>
+        <p class="section-note">The long-form parts of the entry — what the condition is, and (if relevant) how design has responded to it.</p>
+        <div class="field">
+          <label for="f-condition">Condition</label>
+          <textarea id="f-condition" class="tall" placeholder="Describe the spatial, social, or territorial condition this term names."></textarea>
+        </div>
+        <div class="field">
+          <label for="f-design">Design response</label>
+          <textarea id="f-design" class="tall" placeholder="If applicable: how has design engaged with this condition?"></textarea>
+        </div>
+        <div class="field">
+          <label for="f-references">References</label>
+          <textarea id="f-references" placeholder="Sources, citations, or further reading — one per line"></textarea>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Figure</legend>
+        <p class="section-note">A photo, drawing, or diagram that illustrates the term.</p>
+        <div class="field">
+          <label>Image</label>
+          <label class="file-drop" for="f-image">
+            <span class="icon">↑</span>
+            <span class="txt"><b>Choose a file</b> — jpg, png, or pdf</span>
+            <input type="file" id="f-image" accept="image/*,.pdf">
+          </label>
+          <ul class="file-list" id="fileList"></ul>
+        </div>
+        <div class="field">
+          <label for="f-caption">Caption</label>
+          <input type="text" id="f-caption" placeholder="e.g. Place, photographer/source, year">
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Contributor</legend>
+        <div class="row2">
+          <div class="field">
+            <label for="f-name">Name <span class="required-mark">*</span></label>
+            <input type="text" id="f-name" placeholder="Your name" required>
+          </div>
+          <div class="field">
+            <label for="f-affiliation">Affiliation</label>
+            <input type="text" id="f-affiliation" placeholder="e.g. University, studio, or independent">
+          </div>
+        </div>
+        <div class="field">
+          <label for="f-email">Email</label>
+          <input type="email" id="f-email" placeholder="So we can reach you with questions">
+        </div>
+      </fieldset>
+
+      <div class="submit-row">
+        <button type="submit" class="submit-btn" id="submitBtn">Submit entry →</button>
+        <span class="submit-fineprint">Placeholder button — nothing is sent yet.</span>
+      </div>
+
+      <div class="confirm" id="confirmBox">
+        <span class="k">Received (not really)</span>
+        This is a placeholder confirmation — your answers stayed on this page and weren't sent anywhere. Once we've set up a real destination for submissions, this button will actually deliver the form.
+      </div>
+    </form>
+  </div>
+</main>
+
+<script>
+(function(){
+  var fileInput = document.getElementById('f-image');
+  var fileList = document.getElementById('fileList');
+  fileInput.addEventListener('change', function(){
+    fileList.innerHTML = '';
+    Array.prototype.forEach.call(fileInput.files, function(f){
+      var li = document.createElement('li');
+      li.textContent = f.name;
+      fileList.appendChild(li);
+    });
+  });
+
+  var form = document.getElementById('submissionForm');
+  var confirmBox = document.getElementById('confirmBox');
+  form.addEventListener('submit', function(ev){
+    ev.preventDefault();
+    // Placeholder only: no backend exists yet to send this to, so this just
+    // shows a confirmation in place rather than actually submitting anything.
+    confirmBox.classList.add('show');
+    confirmBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  });
+})();
+</script>
+</body>
+</html>

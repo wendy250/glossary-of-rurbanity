@@ -1,0 +1,615 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gallery · Glossary of Rurbanity</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Work+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans:wght@400;500;600&family=Noto+Sans+Arabic:wght@400;600&family=Noto+Sans+SC:wght@400;600&family=Noto+Sans+Khmer:wght@400;600&family=Noto+Sans+Armenian:wght@400;600&family=Noto+Sans+Tamil:wght@400;600&family=Noto+Sans+Kannada:wght@400;600&family=Noto+Sans+Devanagari:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --ground:#f5edf7;
+  --surface:#faf5fb;
+  --surface-2:#f1e6f4;
+  --surface-border:#e6cfe9;
+  --ink:#3a2044;
+  --ink-soft:#7c5a86;
+  --ink-faint:#ab8bb2;
+  --land:#ddbfe3;
+  --land-hi:#c47fd0;
+  --land-line:#9c6ba8;
+  --water:#f7eefa;
+  --accent:#b34fc9;
+  --accent-ink:#7a2f8a;
+  --accent-2:#8a5cb8;
+  --accent-2-soft:#a37cc9;
+  --shadow:0 10px 30px -12px rgba(58,32,68,0.3);
+  --focus:#8a5cb8;
+  --surface-glass:rgba(250,245,251,0.90);
+  --water-glass:rgba(247,238,250,0.5);
+  --land-glass:rgba(221,191,227,0.82);
+  --land-hi-glass:rgba(196,127,208,0.85);
+  --bg-image-opacity:0.4;
+  --bm-water:#e0322c;
+  --bm-coast:#9a7fb3;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#1d1424;
+    --surface:#241a2e;
+    --surface-2:#2e2138;
+    --surface-border:#4a3455;
+    --ink:#f5e6f7;
+    --ink-soft:#c6a6cf;
+    --ink-faint:#8a6d92;
+    --land:#4a2f57;
+    --land-hi:#7d4a8f;
+    --land-line:#6b4a78;
+    --water:#140d1a;
+    --accent:#e0a0ee;
+    --accent-ink:#f6dcf9;
+    --accent-2:#b48fd6;
+    --accent-2-soft:#9c7fc2;
+    --shadow:0 10px 34px -12px rgba(0,0,0,0.6);
+    --focus:#e0a0ee;
+    --surface-glass:rgba(36,26,46,0.90);
+    --water-glass:rgba(20,13,26,0.55);
+    --land-glass:rgba(74,47,87,0.82);
+    --land-hi-glass:rgba(125,74,143,0.85);
+    --bg-image-opacity:0.18;
+    --bm-relief-filter:brightness(.62) saturate(.9);
+    --bm-coast:#8a6a9c;
+    --bm-water:#ff6b5f;
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#1d1424;
+  --surface:#241a2e;
+  --surface-2:#2e2138;
+  --surface-border:#4a3455;
+  --ink:#f5e6f7;
+  --ink-soft:#c6a6cf;
+  --ink-faint:#8a6d92;
+  --land:#4a2f57;
+  --land-hi:#7d4a8f;
+  --land-line:#6b4a78;
+  --water:#140d1a;
+  --accent:#e0a0ee;
+  --accent-ink:#f6dcf9;
+  --accent-2:#b48fd6;
+  --accent-2-soft:#9c7fc2;
+  --shadow:0 10px 34px -12px rgba(0,0,0,0.6);
+  --focus:#e0a0ee;
+  --surface-glass:rgba(36,26,46,0.90);
+  --water-glass:rgba(20,13,26,0.55);
+  --land-glass:rgba(74,47,87,0.82);
+  --land-hi-glass:rgba(125,74,143,0.85);
+  --bg-image-opacity:0.18;
+  --bm-relief-filter:brightness(.62) saturate(.9);
+  --bm-coast:#8a6a9c;
+  --bm-water:#ff6b5f;
+}
+
+*{box-sizing:border-box;}
+body{
+  margin:0;
+  background:var(--ground);
+  color:var(--ink);
+  font-family:'Work Sans', 'Noto Sans', sans-serif;
+  height:100vh;
+  overflow:hidden;
+  position:relative;
+}
+.app{
+  position:relative;
+  z-index:1;
+  display:grid;
+  grid-template-rows:auto 1fr;
+  height:100vh;
+}
+
+/* ---------- header ---------- */
+header.bar{
+  display:flex;
+  align-items:center;
+  gap:20px;
+  padding:12px 20px;
+  background:var(--surface-glass);
+  -webkit-backdrop-filter:blur(10px);
+  backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--surface-border);
+  z-index:20;
+}
+.wordmark{
+  display:flex;
+  align-items:baseline;
+  gap:9px;
+  flex-shrink:0;
+  text-decoration:none;
+  color:var(--ink);
+}
+.wordmark .glyph{
+  font-family:'Fraunces', serif;
+  font-weight:700;
+  font-size:22px;
+  letter-spacing:0.01em;
+  white-space:nowrap;
+}
+@media(max-width:560px){ .wordmark .glyph{ font-size:17px; } }
+.wordmark .tag{
+  font-family:'IBM Plex Mono', monospace;
+  font-size:10.5px;
+  text-transform:uppercase;
+  letter-spacing:0.09em;
+  color:var(--ink-faint);
+  white-space:nowrap;
+}
+.stat-strip{
+  font-family:'IBM Plex Mono', monospace;
+  font-size:11.5px;
+  color:var(--ink-soft);
+  letter-spacing:0.02em;
+  white-space:nowrap;
+  display:none;
+}
+@media(min-width:900px){ .stat-strip{ display:block; } }
+@media(max-width:760px){
+  header.bar{ flex-wrap:wrap; row-gap:8px; }
+  .wordmark{ order:1; }
+  .site-nav{ order:2; }
+  .search-wrap{ order:3; flex-basis:100%; max-width:none; margin-left:0; }
+  .stat-strip{ display:none; }
+}
+
+/* ---------- site navigation (shared: atlas / gallery / constellations / about) ---------- */
+.site-nav{ display:flex; align-items:center; gap:2px; flex-shrink:0; }
+.site-nav a{
+  font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:0.06em; text-transform:uppercase;
+  color:var(--ink-soft); text-decoration:none; padding:6px 9px; border-radius:3px; border:1px solid transparent; white-space:nowrap;
+}
+.site-nav a:hover{ color:var(--ink); background:color-mix(in srgb, var(--accent-2) 10%, transparent); }
+.site-nav a[aria-current="page"]{ color:var(--accent-ink); background:var(--surface); border-color:var(--surface-border); }
+
+/* ---------- search ---------- */
+.search-wrap{
+  margin-left:auto;
+  position:relative;
+  flex:1;
+  max-width:300px;
+  min-width:120px;
+}
+.search-wrap input{
+  width:100%;
+  font-family:'Work Sans', sans-serif;
+  font-size:13.5px;
+  padding:8px 12px 8px 30px;
+  border-radius:3px;
+  border:1px solid var(--surface-border);
+  background:var(--surface);
+  color:var(--ink);
+  outline:none;
+}
+.search-wrap input:focus{ border-color:var(--focus); box-shadow:0 0 0 2px color-mix(in srgb, var(--focus) 25%, transparent); }
+.search-wrap svg{ position:absolute; left:9px; top:50%; transform:translateY(-50%); width:14px; height:14px; color:var(--ink-faint); pointer-events:none; }
+
+/* ---------- layout ---------- */
+.layout{
+  position:relative;
+  min-height:0;
+}
+
+/* ---------- map ---------- */
+.map-viewport{
+  position:relative;
+  overflow:hidden;
+  background:var(--ground);
+  cursor:grab;
+  touch-action:none;
+  height:100%;
+}
+.map-viewport.dragging{ cursor:grabbing; }
+.map-world{
+  position:absolute;
+  top:0; left:0;
+  width:1000px;
+  height:486.72px;
+  transform-origin:0 0;
+}
+.map-world svg{ display:block; width:1000px; height:486.72px; }
+.markers-layer{
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+}
+
+/* ---------- photo markers ---------- */
+/* Each term with a source photograph gets its own pin, exactly like the
+   text labels on the Atlas map -- same project(), same pan/zoom rig. The
+   inner content IS counter-scaled against zoom (transform:scale(var(--ms))),
+   same trick as the Atlas's text tags, so photos stay a constant size on
+   screen while zooming in instead grows the GAP between anchor points --
+   which is what actually pulls overlapping photos apart and makes the ones
+   underneath clickable. */
+.photo-marker{
+  position:absolute;
+  transform:translate(-50%,-100%) scale(var(--card-soft,1));
+  transform-origin:50% 100%;
+  pointer-events:auto;
+  cursor:pointer;
+  z-index:5;
+  text-decoration:none;
+  display:block;
+}
+.photo-marker-inner{
+  position:relative;
+  display:block;
+}
+.photo-marker .photo-card{
+  display:block;
+  width:60px;
+  padding:2px;
+  background:#fff;
+  border-radius:1px;
+  box-shadow:0 2px 9px -3px rgba(40,20,50,0.3), 0 1px 2px rgba(40,20,50,0.14);
+  transition:transform .15s ease, box-shadow .15s ease;
+}
+.photo-marker .photo-card img{
+  display:block;
+  width:100%;
+  aspect-ratio:4/3;
+  object-fit:cover;
+  background:var(--surface-2);
+}
+/* Labels float in whichever direction (around the photo) was assigned to
+   them, instead of always sitting underneath, so a tight cluster of photos
+   reads as photos-with-nearby-words rather than a column of captions. */
+.photo-marker .tag-box{
+  position:absolute;
+  font-family:'Work Sans','Noto Sans','Noto Sans Arabic','Noto Sans SC','Noto Sans Khmer','Noto Sans Armenian','Noto Sans Tamil','Noto Sans Kannada','Noto Sans Devanagari',sans-serif;
+  font-size:6px;
+  font-weight:400;
+  letter-spacing:0.01em;
+  line-height:1.2;
+  color:var(--ink-soft);
+  background:none;
+  border:none;
+  white-space:nowrap;
+  max-width:60px;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  transition:color .15s ease, max-width 0s;
+}
+.photo-marker .tag-box.lbl-top{ bottom:100%; left:50%; transform:translateX(-50%); margin-bottom:4px; }
+.photo-marker .tag-box.lbl-bottom{ top:100%; left:50%; transform:translateX(-50%); margin-top:4px; }
+.photo-marker .tag-box.lbl-left{ right:100%; top:50%; transform:translateY(-50%); margin-right:5px; text-align:right; }
+.photo-marker .tag-box.lbl-right{ left:100%; top:50%; transform:translateY(-50%); margin-left:5px; }
+.photo-marker .tag-box.lbl-tl{ bottom:100%; right:100%; margin-bottom:3px; margin-right:3px; text-align:right; }
+.photo-marker .tag-box.lbl-tr{ bottom:100%; left:100%; margin-bottom:3px; margin-left:3px; }
+.photo-marker .tag-box.lbl-bl{ top:100%; right:100%; margin-top:3px; margin-right:3px; text-align:right; }
+.photo-marker .tag-box.lbl-br{ top:100%; left:100%; margin-top:3px; margin-left:3px; }
+.photo-marker:hover, .photo-marker:focus-visible{ z-index:999; }
+.photo-marker:hover .photo-card, .photo-marker:focus-visible .photo-card{
+  transform:scale(1.12);
+  box-shadow:0 8px 20px -5px rgba(40,20,50,0.4), 0 2px 5px rgba(40,20,50,0.18);
+}
+.photo-marker:hover .tag-box, .photo-marker:focus-visible .tag-box{
+  color:var(--accent-ink);
+  max-width:none;
+  overflow:visible;
+}
+.photo-marker:focus-visible{ outline:none; }
+.photo-marker:focus-visible .tag-box{ color:var(--accent-ink); }
+.photo-marker.hidden{ display:none; }
+
+/* map controls */
+.map-controls{
+  position:absolute;
+  right:14px;
+  bottom:14px;
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+  z-index:15;
+}
+.map-controls button{
+  width:30px; height:30px;
+  border-radius:3px;
+  border:1px solid var(--surface-border);
+  background:var(--surface);
+  color:var(--ink);
+  font-size:16px;
+  line-height:1;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  box-shadow:var(--shadow);
+}
+.map-controls button:hover{ background:var(--surface-2); }
+.map-controls .reset{ font-family:'IBM Plex Mono',monospace; font-size:9.5px; letter-spacing:0.04em; width:auto; padding:0 8px; }
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="bar">
+    <a class="wordmark" href="index.html">
+      <span class="glyph">Glossary of Rurbanity</span>
+    </a>
+    <nav class="site-nav" aria-label="Site"><a href="index.html">Atlas</a><a href="gallery.html" aria-current="page">Gallery</a><a href="constellations.html">Constellations</a><a href="submission.html">Submission</a><a href="about.html">About</a></nav>
+    <div class="search-wrap">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input id="searchInput" type="text" placeholder="Search term, place, contributor…" autocomplete="off">
+    </div>
+    <div class="stat-strip" id="statStrip"></div>
+  </header>
+
+  <div class="layout">
+    <div class="map-viewport" id="mapViewport">
+      <div class="map-world" id="mapWorld">
+        <div class="markers-layer" id="markersLayer"></div>
+      </div>
+      <div class="map-controls">
+        <button type="button" id="zoomIn" aria-label="Zoom in">+</button>
+        <button type="button" id="zoomOut" aria-label="Zoom out">–</button>
+        <button type="button" class="reset" id="zoomReset">RESET</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script id="mapData" type="application/json">{"width":1000,"height":486.72}</script>
+<script src="entries.js"></script>
+
+<script>
+(function(){
+  var ENTRIES = window.GLOSSARY_ENTRIES;
+  var W = 1000, H = 486.72;
+
+  var withPhoto = ENTRIES.filter(function(e){
+    return !e.unlocated && e.figures && e.figures.length && e.figures[0].images && e.figures[0].images.length;
+  });
+  document.getElementById('statStrip').textContent = withPhoto.length + ' photographs';
+
+  // Equal Earth projection (Savric/Jenny/Jenny 2018) -- identical to the
+  // Atlas map's, so a photo's position here matches its pin on index.html.
+  var EQ_A1 = 1.340264, EQ_A2 = -0.081106, EQ_A3 = 0.000893, EQ_A4 = 0.003796;
+  var EQ_SQRT3 = Math.sqrt(3);
+  var EQ_XMAX = (2 * EQ_SQRT3 * Math.PI) / (3 * EQ_A1);
+  var EQ_YMAX = (function(){
+    var th = Math.asin(EQ_SQRT3 / 2);
+    var t2 = th*th;
+    return th * (EQ_A1 + EQ_A2*t2 + EQ_A3*Math.pow(t2,3) + EQ_A4*Math.pow(t2,4));
+  })();
+  var EQ_SCALE = W / (2 * EQ_XMAX);
+  function project(lat, lon){
+    var phi = lat * Math.PI / 180, lambda = lon * Math.PI / 180;
+    var theta = Math.asin((EQ_SQRT3 / 2) * Math.sin(phi));
+    var t2 = theta*theta, t6 = Math.pow(theta,6), t8 = Math.pow(theta,8);
+    var xEq = (2 * EQ_SQRT3 * lambda * Math.cos(theta)) / (3 * (9*EQ_A4*t8 + 7*EQ_A3*t6 + 3*EQ_A2*t2 + EQ_A1));
+    var yEq = theta * (EQ_A1 + EQ_A2*t2 + EQ_A3*t6 + EQ_A4*t8);
+    var x = (xEq + EQ_XMAX) * EQ_SCALE;
+    var y = (EQ_YMAX - yEq) * EQ_SCALE;
+    return { x: x, y: y };
+  }
+
+  // ---- pan / zoom (same rig as the Atlas) ----
+  var viewport = document.getElementById('mapViewport');
+  var world = document.getElementById('mapWorld');
+  var scale = 1, tx = 0, ty = 0;
+  var minScale = 1, maxScale = 36;
+
+  // Gallery opens at the smallest (fully zoomed-out) level, not boosted in
+  // like the Atlas map.
+  var TOP_SHIFT = 46; // px of breathing room kept below the header bar
+  function fitToViewport(){
+    var vw = viewport.clientWidth, vh = viewport.clientHeight;
+    var s = Math.min(vw / W, vh / H);
+    minScale = s;
+    scale = s;
+    tx = (vw - W*scale)/2;
+    ty = (vh - H*scale)/2 + TOP_SHIFT;
+    apply();
+  }
+
+  function clampPan(){
+    var vw = viewport.clientWidth, vh = viewport.clientHeight;
+    var mw = W*scale, mh = H*scale;
+    var minTx = Math.min(0, vw-mw), maxTx = Math.max(0, vw-mw);
+    var minTy = Math.min(0, vh-mh), maxTy = Math.max(0, vh-mh);
+    if(mw <= vw){ tx = (vw-mw)/2; } else { tx = Math.max(minTx, Math.min(maxTx, tx)); }
+    if(mh <= vh){ ty = (vh-mh)/2 + TOP_SHIFT; } else { ty = Math.max(minTy, Math.min(maxTy, ty)); }
+  }
+
+  function apply(){
+    clampPan();
+    world.style.transform = 'translate(' + tx + 'px,' + ty + 'px) scale(' + scale + ')';
+    // Photos grow with zoom, but heavily damped against how far scale has
+    // moved from the fitted-out baseline, so the gap between neighbouring
+    // photos opens up much faster than the photos themselves grow.
+    document.documentElement.style.setProperty('--card-soft', Math.pow(minScale/scale, 0.78).toFixed(4));
+  }
+
+  function zoomAt(cx, cy, factor){
+    var newScale = Math.max(minScale, Math.min(maxScale, scale*factor));
+    if(newScale === scale) return;
+    var wx = (cx - tx)/scale, wy = (cy - ty)/scale;
+    tx = cx - wx*newScale;
+    ty = cy - wy*newScale;
+    scale = newScale;
+    apply();
+  }
+
+  var wheelSettleTimer = null;
+  viewport.addEventListener('wheel', function(ev){
+    ev.preventDefault();
+    var rect = viewport.getBoundingClientRect();
+    var cx = ev.clientX - rect.left, cy = ev.clientY - rect.top;
+    var factor = Math.pow(1.0025, -ev.deltaY);
+    world.style.willChange = 'transform';
+    zoomAt(cx, cy, factor);
+    clearTimeout(wheelSettleTimer);
+    wheelSettleTimer = setTimeout(function(){ world.style.willChange = 'auto'; }, 180);
+  }, { passive:false });
+
+  var dragging = false, dragStartX=0, dragStartY=0, txStart=0, tyStart=0, moved=false;
+  function pointerDown(x,y){
+    dragging = true; moved=false;
+    dragStartX = x; dragStartY = y; txStart = tx; tyStart = ty;
+    viewport.classList.add('dragging');
+    world.style.willChange = 'transform';
+  }
+  function pointerMove(x,y){
+    if(!dragging) return;
+    var dx = x-dragStartX, dy = y-dragStartY;
+    if(Math.abs(dx)+Math.abs(dy) > 3) moved = true;
+    tx = txStart+dx; ty = tyStart+dy;
+    apply();
+  }
+  function pointerUp(){
+    dragging = false;
+    viewport.classList.remove('dragging');
+    world.style.willChange = 'auto';
+  }
+  viewport.addEventListener('mousedown', function(ev){ pointerDown(ev.clientX, ev.clientY); });
+  window.addEventListener('mousemove', function(ev){ pointerMove(ev.clientX, ev.clientY); });
+  window.addEventListener('mouseup', pointerUp);
+  viewport.addEventListener('touchstart', function(ev){
+    if(ev.touches.length===1){ pointerDown(ev.touches[0].clientX, ev.touches[0].clientY); }
+    else if(ev.touches.length===2){ dragging=false; pinchStart(ev); }
+  }, { passive:true });
+  viewport.addEventListener('touchmove', function(ev){
+    if(ev.touches.length===1){ pointerMove(ev.touches[0].clientX, ev.touches[0].clientY); }
+    else if(ev.touches.length===2){ pinchMove(ev); }
+  }, { passive:true });
+  viewport.addEventListener('touchend', function(){ pointerUp(); pinchActive=false; });
+
+  var pinchActive=false, pinchDist0=0, pinchScale0=1;
+  function dist(t0,t1){ var dx=t0.clientX-t1.clientX, dy=t0.clientY-t1.clientY; return Math.sqrt(dx*dx+dy*dy); }
+  function pinchStart(ev){
+    pinchActive = true;
+    pinchDist0 = dist(ev.touches[0], ev.touches[1]);
+    pinchScale0 = scale;
+    world.style.willChange = 'transform';
+  }
+  function pinchMove(ev){
+    if(!pinchActive) return;
+    var d = dist(ev.touches[0], ev.touches[1]);
+    var rect = viewport.getBoundingClientRect();
+    var cx = (ev.touches[0].clientX+ev.touches[1].clientX)/2 - rect.left;
+    var cy = (ev.touches[0].clientY+ev.touches[1].clientY)/2 - rect.top;
+    var target = pinchScale0 * (d/pinchDist0);
+    zoomAt(cx, cy, target/scale);
+  }
+
+  document.getElementById('zoomIn').addEventListener('click', function(){
+    zoomAt(viewport.clientWidth/2, viewport.clientHeight/2, 1.6);
+  });
+  document.getElementById('zoomOut').addEventListener('click', function(){
+    zoomAt(viewport.clientWidth/2, viewport.clientHeight/2, 1/1.6);
+  });
+  document.getElementById('zoomReset').addEventListener('click', function(){ fitToViewport(); });
+
+  viewport.addEventListener('dblclick', function(ev){
+    var rect = viewport.getBoundingClientRect();
+    zoomAt(ev.clientX-rect.left, ev.clientY-rect.top, 1.8);
+  });
+
+  function escapeHtml(s){
+    if(s==null) return '';
+    return String(s).replace(/[&<>"']/g, function(c){
+      return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];
+    });
+  }
+
+  // ---- photo markers ----
+  // True projected position for every photo; entries sharing (near-)
+  // identical coordinates are fanned out in a small deterministic spiral
+  // so they don't sit perfectly on top of each other.
+  var nodes = withPhoto.map(function(e){
+    var p = project(e.lat, e.lon);
+    return { e: e, x: p.x, y: p.y };
+  });
+  var coordGroups = {};
+  withPhoto.forEach(function(e, i){
+    var key = e.lat.toFixed(2) + ',' + e.lon.toFixed(2);
+    (coordGroups[key] = coordGroups[key] || []).push(nodes[i]);
+  });
+  Object.keys(coordGroups).forEach(function(key){
+    var group = coordGroups[key];
+    if(group.length < 2) return;
+    var GOLDEN_ANGLE = 137.508 * Math.PI / 180;
+    group.forEach(function(n, i){
+      var r = 24 * Math.sqrt(i);
+      var a = i * GOLDEN_ANGLE;
+      n.x += r * Math.cos(a);
+      n.y += r * Math.sin(a);
+    });
+  });
+
+  // Each label is placed on whichever of 8 compass directions points away
+  // from this photo's nearest neighbours, so it lands in open space next
+  // to its photo instead of under (or inside) a neighbouring one.
+  var DIR_ORDER = ['lbl-right','lbl-br','lbl-bottom','lbl-bl','lbl-left','lbl-tl','lbl-top','lbl-tr'];
+  var NEIGHBOR_R = 140;
+  function pickLabelDir(node){
+    var sx = 0, sy = 0;
+    nodes.forEach(function(other){
+      if(other === node) return;
+      var dx = other.x - node.x, dy = other.y - node.y;
+      var d2 = dx*dx + dy*dy;
+      if(d2 > 0 && d2 < NEIGHBOR_R*NEIGHBOR_R){
+        var w = 1/d2;
+        sx += dx*w; sy += dy*w;
+      }
+    });
+    if(sx === 0 && sy === 0) return 'lbl-bottom';
+    var angle = Math.atan2(-sy, -sx);
+    var idx = Math.round(angle / (Math.PI/4));
+    idx = ((idx % 8) + 8) % 8;
+    return DIR_ORDER[idx];
+  }
+
+  var markersLayer = document.getElementById('markersLayer');
+  var markerEls = {};
+  nodes.forEach(function(node){
+    var e = node.e;
+    var a = document.createElement('a');
+    a.className = 'photo-marker';
+    a.href = 'term.html?id=' + e.id;
+    a.style.left = node.x + 'px';
+    a.style.top = node.y + 'px';
+    var img = e.figures[0].images[0];
+    a.innerHTML = '<span class="photo-marker-inner">' +
+      '<span class="photo-card">' +
+        '<img src="' + escapeHtml(img) + '" alt="' + escapeHtml(e.original) + '" loading="lazy">' +
+      '</span>' +
+      '<span class="tag-box ' + pickLabelDir(node) + '">' + escapeHtml(e.original) + '</span>' +
+    '</span>';
+    markersLayer.appendChild(a);
+    markerEls[e.id] = a;
+  });
+
+  // ---- search ----
+  // Filters which photos are shown; doesn't move the map, same as typing
+  // in the Atlas's search box doesn't move the map until you pick a result.
+  var searchInput = document.getElementById('searchInput');
+  function searchHay(e){
+    return [e.original, e.transliteration, e.meaning, e.country, e.contributor, e.where]
+      .filter(Boolean).join(' ').toLowerCase();
+  }
+  searchInput.addEventListener('input', function(){
+    var q = searchInput.value.trim().toLowerCase();
+    withPhoto.forEach(function(e){
+      var match = !q || searchHay(e).indexOf(q) !== -1;
+      markerEls[e.id].classList.toggle('hidden', !match);
+    });
+  });
+
+  window.addEventListener('resize', fitToViewport);
+  fitToViewport();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,310 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>About · Glossary of Rurbanity</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Work+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans:wght@400;500;600&family=Noto+Sans+Arabic:wght@400;600&family=Noto+Sans+SC:wght@400;600&family=Noto+Sans+Bengali:wght@400;600&family=Noto+Sans+Gurmukhi:wght@400;600&family=Noto+Sans+Devanagari:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+/* Same palette as the atlas (index.html) so the two read as one site. */
+:root{
+  --ground:#f5edf7;
+  --surface:#faf5fb;
+  --surface-2:#f1e6f4;
+  --surface-border:#e6cfe9;
+  --ink:#3a2044;
+  --ink-soft:#7c5a86;
+  --ink-faint:#ab8bb2;
+  --accent:#b34fc9;
+  --accent-ink:#7a2f8a;
+  --accent-2:#8a5cb8;
+  --accent-2-soft:#a37cc9;
+  --surface-glass:rgba(250,245,251,0.90);
+  --term-font:'Noto Sans','Noto Sans Arabic','Noto Sans SC','Noto Sans Bengali','Noto Sans Gurmukhi','Noto Sans Devanagari','Work Sans',sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#1d1424;
+    --surface:#241a2e;
+    --surface-2:#2e2138;
+    --surface-border:#4a3455;
+    --ink:#f5e6f7;
+    --ink-soft:#c6a6cf;
+    --ink-faint:#8a6d92;
+    --accent:#e0a0ee;
+    --accent-ink:#f6dcf9;
+    --accent-2:#b48fd6;
+    --accent-2-soft:#9c7fc2;
+    --surface-glass:rgba(36,26,46,0.90);
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#1d1424;
+  --surface:#241a2e;
+  --surface-2:#2e2138;
+  --surface-border:#4a3455;
+  --ink:#f5e6f7;
+  --ink-soft:#c6a6cf;
+  --ink-faint:#8a6d92;
+  --accent:#e0a0ee;
+  --accent-ink:#f6dcf9;
+  --accent-2:#b48fd6;
+  --accent-2-soft:#9c7fc2;
+  --surface-glass:rgba(36,26,46,0.90);
+}
+
+*{ box-sizing:border-box; }
+body{
+  margin:0;
+  background:var(--ground);
+  color:var(--ink);
+  font-family:'Work Sans','Noto Sans',sans-serif;
+}
+a{ color:var(--accent-2); }
+
+/* ---------- header (matches the atlas bar) ---------- */
+header.bar{
+  position:sticky;
+  top:0;
+  display:flex;
+  align-items:center;
+  gap:20px;
+  padding:12px 20px;
+  background:var(--surface-glass);
+  -webkit-backdrop-filter:blur(10px);
+  backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--surface-border);
+  z-index:20;
+}
+.wordmark{ display:flex; align-items:baseline; gap:9px; text-decoration:none; color:var(--ink); min-width:0; }
+.wordmark .glyph{ font-family:'Fraunces',serif; font-weight:700; font-size:22px; white-space:nowrap; }
+.wordmark .tag{
+  font-family:'IBM Plex Mono',monospace; font-size:10.5px; text-transform:uppercase;
+  letter-spacing:0.09em; color:var(--ink-faint); white-space:nowrap;
+}
+.back-link{
+  margin-left:auto;
+  flex-shrink:0;
+  font-family:'IBM Plex Mono',monospace;
+  font-size:11px;
+  letter-spacing:0.05em;
+  color:var(--accent-2);
+  text-decoration:none;
+  border:1px solid var(--accent-2-soft);
+  padding:7px 11px;
+  border-radius:3px;
+}
+.back-link:hover{ background:color-mix(in srgb, var(--accent-2) 12%, transparent); }
+@media(max-width:560px){
+  .wordmark .glyph{ font-size:17px; }
+  .wordmark .tag{ display:none; }
+}
+
+/* ---------- site navigation (shared: atlas / constellations / about) ---------- */
+.site-nav{ display:flex; align-items:center; gap:2px; flex-shrink:0; }
+.site-nav a{
+  font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:0.06em; text-transform:uppercase;
+  color:var(--ink-soft); text-decoration:none; padding:6px 9px; border-radius:3px; border:1px solid transparent; white-space:nowrap;
+}
+.site-nav a:hover{ color:var(--ink); background:color-mix(in srgb, var(--accent-2) 10%, transparent); }
+.site-nav a[aria-current="page"]{ color:var(--accent-ink); background:var(--surface); border-color:var(--surface-border); }
+@media(max-width:700px){ .site-nav{ display:none; } }
+
+/* ---------- article ---------- */
+main{ padding:48px 16px 80px; }
+.term{ max-width:760px; margin:0 auto; }
+.eyebrow{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:11px;
+  letter-spacing:0.09em;
+  text-transform:uppercase;
+  color:var(--ink-faint);
+}
+.eyebrow .dot{ margin:0 6px; }
+h1.orig{
+  margin:10px 0 0;
+  font-family:var(--term-font);
+  font-weight:600;
+  font-size:clamp(34px, 6vw, 56px);
+  line-height:1.15;
+  word-break:break-word;
+  text-wrap:balance;
+}
+.translit{
+  margin:6px 0 0;
+  font-family:'Fraunces',serif;
+  font-style:italic;
+  font-size:20px;
+  color:var(--ink-soft);
+}
+
+.facts{
+  margin:32px 0 0;
+  display:grid;
+  grid-template-columns:repeat(3, minmax(0,1fr));
+  gap:0;
+  border-top:1px solid var(--surface-border);
+  border-bottom:1px solid var(--surface-border);
+}
+.facts > div{ padding:16px 16px 18px 0; }
+.facts > div + div{ padding-left:16px; border-left:1px solid var(--surface-border); }
+@media(max-width:640px){
+  .facts{ grid-template-columns:1fr; }
+  .facts > div + div{ padding-left:0; border-left:none; border-top:1px solid var(--surface-border); }
+}
+.k{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:10.5px;
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+  color:var(--ink-faint);
+  margin-bottom:6px;
+}
+.facts .v{ font-size:14.5px; line-height:1.5; white-space:pre-wrap; }
+
+.keyword{ margin:28px 0 0; }
+.keyword .v{ font-family:'Fraunces',serif; font-size:18px; line-height:1.5; white-space:pre-wrap; }
+
+/* figures stay within the text column */
+.figures{ margin:40px 0 0; }
+figure{ margin:0 0 32px; }
+.fig-images.multi{
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(240px, 1fr));
+  gap:10px;
+  align-items:start;
+}
+figure img{
+  display:block;
+  width:100%;
+  height:auto;
+  border-radius:3px;
+  border:1px solid var(--surface-border);
+  background:var(--surface-2);
+}
+figcaption{
+  margin-top:10px;
+  font-size:13px;
+  line-height:1.55;
+  color:var(--ink-soft);
+  max-width:760px;
+}
+figcaption .cap{ white-space:pre-line; }
+figcaption .num{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:10.5px;
+  letter-spacing:0.06em;
+  text-transform:uppercase;
+  color:var(--ink-faint);
+  margin-right:6px;
+}
+
+section.text{ margin:40px 0 0; }
+section.text h2{
+  margin:0 0 12px;
+  font-family:'Fraunces',serif;
+  font-weight:600;
+  font-size:22px;
+}
+section.text p{
+  margin:0 0 1em;
+  font-size:16.5px;
+  line-height:1.72;
+}
+section.refs p{
+  font-size:13.5px;
+  line-height:1.6;
+  color:var(--ink-soft);
+  padding-left:1.4em;
+  text-indent:-1.4em;
+  overflow-wrap:anywhere;
+  margin:0 0 .6em;
+}
+
+.contributor{
+  margin:48px 0 0;
+  padding-top:20px;
+  border-top:1px dashed var(--surface-border);
+}
+.contributor .name{ font-family:'Fraunces',serif; font-weight:500; font-size:19px; }
+.contributor .affil{ margin-top:2px; font-size:13.5px; color:var(--ink-soft); }
+
+.map-link{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  margin-top:28px;
+  font-family:'IBM Plex Mono',monospace;
+  font-size:11px;
+  letter-spacing:0.05em;
+  color:var(--accent-2);
+  text-decoration:none;
+  border:1px solid var(--accent-2-soft);
+  padding:8px 12px;
+  border-radius:3px;
+}
+.map-link:hover{ background:color-mix(in srgb, var(--accent-2) 12%, transparent); }
+
+.missing{ text-align:center; padding:80px 16px; color:var(--ink-soft); }
+
+/* ---------- about page ---------- */
+.about{ max-width:760px; margin:0 auto; }
+.about h1{ margin:10px 0 0; font-family:'Fraunces',serif; font-weight:600; font-size:clamp(34px,6vw,52px); line-height:1.15; }
+.about .lede{ margin:18px 0 0; font-size:18px; line-height:1.65; color:var(--ink-soft); }
+.about section{ margin:44px 0 0; padding-top:20px; border-top:1px solid var(--surface-border); }
+.about h2{ margin:0 0 14px; font-family:'Fraunces',serif; font-weight:600; font-size:22px; }
+.about p{ margin:0 0 1em; font-size:16.5px; line-height:1.72; }
+.team{ list-style:none; margin:0; padding:0; display:grid; gap:10px; }
+.team li{ font-family:'Fraunces',serif; font-size:20px; }
+.placeholder{ color:var(--ink-faint); font-style:italic; }
+.event-btn{
+  display:inline-flex; align-items:center; gap:8px; margin-top:6px;
+  font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:0.05em; text-transform:uppercase;
+  color:#fff; background:var(--accent-2); text-decoration:none;
+  padding:11px 16px; border-radius:3px; border:1px solid var(--accent-2);
+}
+.event-btn:hover{ background:var(--accent-ink); border-color:var(--accent-ink); }
+:root[data-theme="dark"] .event-btn{ color:#1d1424; }
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .event-btn{ color:#1d1424; } }
+</style>
+</head>
+<body>
+<header class="bar">
+  <a class="wordmark" href="index.html">
+    <span class="glyph">Glossary of Rurbanity</span>
+  </a>
+  <nav class="site-nav" aria-label="Site"><a href="index.html">Atlas</a><a href="gallery.html">Gallery</a><a href="constellations.html">Constellations</a><a href="submission.html">Submission</a><a href="about.html" aria-current="page">About</a></nav>
+</header>
+
+<main>
+  <article class="about">
+    <div class="eyebrow">About</div>
+    <h1>Glossary of Rurbanity</h1>
+    <p class="lede">A field atlas of words for the places where the urban and the rural meet, contributed by researchers and designers from around the world.</p>
+
+    <section>
+      <h2>The project</h2>
+      <p class="placeholder">Project description to come.</p>
+    </section>
+
+    <section>
+      <h2>Team</h2>
+      <ul class="team">
+        <li>Sophia Xiao</li>
+        <li>Sofia Leoni</li>
+        <li>Yunjie Zhang</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Conference</h2>
+      <p>Carrots and Sticks: Incentives Shaping the “Rurban” Interface — DDes Conference 2026, Harvard Graduate School of Design.</p>
+      <a class="event-btn" href="https://www.gsd.harvard.edu/event/carrots-and-sticks-incentives-shaping-the-rurban-interface/" target="_blank" rel="noopener">Conference page ↗</a>
+    </section>
+  </article>
+</main>
+</body>
+</html>
