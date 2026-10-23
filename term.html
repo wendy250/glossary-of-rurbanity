@@ -103,16 +103,6 @@ header.bar{
   .wordmark .tag{ display:none; }
 }
 
-/* ---------- site navigation (shared: atlas / constellations / about) ---------- */
-.site-nav{ display:flex; align-items:center; gap:2px; flex-shrink:0; }
-.site-nav a{
-  font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:0.06em; text-transform:uppercase;
-  color:var(--ink-soft); text-decoration:none; padding:6px 9px; border-radius:3px; border:1px solid transparent; white-space:nowrap;
-}
-.site-nav a:hover{ color:var(--ink); background:color-mix(in srgb, var(--accent-2) 10%, transparent); }
-.site-nav a[aria-current="page"]{ color:var(--accent-ink); background:var(--surface); border-color:var(--surface-border); }
-@media(max-width:700px){ .site-nav{ display:none; } }
-
 /* ---------- article ---------- */
 main{ padding:48px 16px 80px; }
 .term{ max-width:760px; margin:0 auto; }
@@ -255,8 +245,8 @@ section.refs p{
 <header class="bar">
   <a class="wordmark" href="index.html">
     <span class="glyph">Glossary of Rurbanity</span>
+    <span class="tag">A Field Atlas</span>
   </a>
-  <nav class="site-nav" aria-label="Site"><a href="index.html">Atlas</a><a href="gallery.html">Gallery</a><a href="constellations.html">Constellations</a><a href="submission.html">Submission</a><a href="about.html">About</a></nav>
   <a class="back-link" id="backLink" href="index.html">← Back to map</a>
 </header>
 
