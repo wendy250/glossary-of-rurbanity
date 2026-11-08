@@ -648,6 +648,11 @@ header.bar{
 (function(){
   var MAP = JSON.parse(document.getElementById('mapData').textContent);
   var ENTRIES = window.GLOSSARY_ENTRIES;
+  // Entry ids are stable identifiers, not array positions -- removing an
+  // entry (or any future gap) shifts later array indices, so look up by id
+  // rather than indexing the array directly.
+  var ENTRIES_BY_ID = {};
+  ENTRIES.forEach(function(e){ ENTRIES_BY_ID[e.id] = e; });
   var W = MAP.width, H = MAP.height;
 
   var located = ENTRIES.filter(function(e){ return !e.unlocated; });
@@ -1051,7 +1056,7 @@ header.bar{
   function selectEntry(id, locIdx){
     activeId = id;
     locIdx = locIdx || 0;
-    var e = ENTRIES[id];
+    var e = ENTRIES_BY_ID[id];
     listView.style.display = 'none';
     detailView.style.display = 'block';
     panelEyebrow.textContent = e.unlocated ? 'Non-geographic term' : (e.country||'');
@@ -1141,7 +1146,7 @@ header.bar{
 
   // term.html links back here as index.html#term=<id> to reopen that term.
   var hashMatch = /^#term=(\d+)$/.exec(location.hash);
-  if(hashMatch && ENTRIES[+hashMatch[1]]) selectEntry(+hashMatch[1]);
+  if(hashMatch && ENTRIES_BY_ID[+hashMatch[1]]) selectEntry(+hashMatch[1]);
 })();
 </script>
 
